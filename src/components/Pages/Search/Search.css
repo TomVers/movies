@@ -1,0 +1,12 @@
+.search-input {
+  width: 950px;
+  padding: 4px 7px;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
