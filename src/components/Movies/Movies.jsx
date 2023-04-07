@@ -2,8 +2,6 @@ import { Spin, Alert } from 'antd'
 
 import MovieItem from './MovieItem'
 
-import './Movies.css'
-
 export default function Movies({ items, loading, error }) {
   if (error) {
     return <Alert message='Error!' description='Could not get a movies from a server.' type='error' banner='true' />
@@ -26,6 +24,7 @@ export default function Movies({ items, loading, error }) {
         overview={item.overview}
         poster={item.poster_path}
         userscore={item.vote_average.toFixed(1)}
+        genreId={item.genre_ids}
       />
     ))
   }
