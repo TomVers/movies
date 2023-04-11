@@ -7,8 +7,26 @@ import moviesDb from '../../services/moviesDb'
 import ratingColor from '../../services/ratingColor'
 import { Consumer } from '../../context/genreContext'
 
-function MovieItem({ title, released, overview, poster, userscore, genreId }) {
-  const moviesDB = new moviesDb()
+function MovieItem({ title, released, overview, poster, userscore, genreId, id, guestRating }) {
+  let moviesDB = new moviesDb()
+
+  const onChangeRating = (value) => {
+    let token = localStorage.getItem('guestId')
+    let guestId = JSON.parse(token)
+    let guestRatedMovies = JSON.parse(localStorage.getItem('rated')) || []
+    let movieRating = { id, value }
+    let movieIndex = guestRatedMovies.findIndex((movie) => movie.id === id)
+    if (!value) {
+      moviesDB.deleteMovieRating(guestId, id)
+      guestRatedMovies.splice(movieIndex, 1)
+    } else {
+      moviesDB.postMovieRating(guestId, value, id)
+      movieIndex !== -1
+        ? guestRatedMovies.splice(movieIndex, 1, movieRating)
+        : (guestRatedMovies = [...guestRatedMovies, movieRating])
+    }
+    localStorage.setItem('rated', JSON.stringify(guestRatedMovies))
+  }
 
   return (
     <Consumer>
@@ -29,10 +47,11 @@ function MovieItem({ title, released, overview, poster, userscore, genreId }) {
               percent={userscore * 10}
               format={(percent) => (percent / 10).toFixed(1)}
               strokeColor={ratingColor(userscore)}
+              size='default'
             />
             <div className='case'>
               <h1 className='case__title'>{title}</h1>
-              <p className='case__date'>{released ? format(new Date(released), 'MMM dd, yyyy') : 'No data'}</p>
+              <p className='case__date'>{released ? format(new Date(released), 'MMM dd, yyyy') : 'No release date'}</p>
               {genres.map((el) => {
                 if (genreId.includes(el.id)) {
                   return (
@@ -45,7 +64,13 @@ function MovieItem({ title, released, overview, poster, userscore, genreId }) {
               })}
               <div className='case__info'>{shortInfo(overview)}</div>
             </div>
-            <Rate count={10} allowHalf={true} className='stars' />
+            <Rate
+              onChange={(value) => onChangeRating(value)}
+              defaultValue={guestRating?.value || 0}
+              count={10}
+              allowHalf={true}
+              className='stars'
+            />
           </section>
         </div>
       )}

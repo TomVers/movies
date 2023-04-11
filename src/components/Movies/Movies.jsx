@@ -2,7 +2,7 @@ import { Spin, Alert } from 'antd'
 
 import MovieItem from './MovieItem'
 
-export default function Movies({ items, loading, error }) {
+export default function Movies({ items, loading, error, guestRating }) {
   if (error) {
     return <Alert message='Error!' description='Could not get a movies from a server.' type='error' banner='true' />
   } else if (!loading) {
@@ -19,12 +19,14 @@ export default function Movies({ items, loading, error }) {
     return items.map((item) => (
       <MovieItem
         key={item.id}
+        id={item.id}
         title={item.title}
         released={item.release_date}
         overview={item.overview}
         poster={item.poster_path}
         userscore={item.vote_average.toFixed(1)}
         genreId={item.genre_ids}
+        guestRating={guestRating.filter((el) => el.id === item.id)[0]}
       />
     ))
   }

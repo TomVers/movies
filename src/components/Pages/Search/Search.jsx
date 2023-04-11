@@ -15,6 +15,7 @@ export default class Search extends Component {
     page: 1,
     totalPages: null,
     error: null,
+    guestRating: JSON.parse(localStorage.getItem('rated')) || [],
   }
 
   moviesDB = new moviesDb()
@@ -60,7 +61,7 @@ export default class Search extends Component {
   }
 
   render() {
-    const { items, page, totalPages, loading, error } = this.state
+    const { items, page, totalPages, loading, error, guestRating } = this.state
 
     return (
       <>
@@ -71,7 +72,7 @@ export default class Search extends Component {
           onChange={debounce(this.onSearch, 600)}
         />
         <div className='movie-list'>
-          <Movies items={items} loading={loading} error={error} />
+          <Movies items={items} loading={loading} error={error} guestRating={guestRating} />
           <Pagination
             defaultCurrent={1}
             current={page}

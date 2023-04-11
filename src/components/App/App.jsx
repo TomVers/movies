@@ -42,7 +42,16 @@ export default class App extends Component {
     )
   }
 
+  createLocalGuestSession = () => {
+    let token = JSON.parse(localStorage.getItem('guestId'))
+    if (!token) {
+      this.moviesDB.getGuest()
+      localStorage.setItem('rated', JSON.stringify([]))
+    }
+  }
+
   componentDidMount() {
+    this.createLocalGuestSession()
     this.getGenres()
   }
 
