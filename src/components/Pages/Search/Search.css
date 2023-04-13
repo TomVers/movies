@@ -1,12 +1,30 @@
-.search-input {
-  width: 950px;
-  padding: 4px 7px;
+/* FOR DISPLAYS 320px */
+@media (max-width: 767px) {
+  .search-input {
+    padding: 4px 7px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .movie-list {
+    display: inline-block;
+    margin-top: 15px;
+  }
 }
 
-.movie-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 20px;
+/* FOR BIG DISPLAYS */
+@media (min-width: 768px) {
+  .search-input {
+    width: 950px;
+    padding: 4px 7px;
+  }
+
+  .movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
 }

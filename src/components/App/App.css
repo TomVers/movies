@@ -5,16 +5,28 @@ body {
   font-family: Inter, sans-serif;
 }
 
-.main {
-  width: 950px;
-  background: #ffffff;
-  padding: 30px;
-}
-
 .tab-nav {
   display: flex;
   font-weight: 300;
   font-size: 14px;
   gap: 15px;
   justify-content: center;
+}
+
+/* FOR DISPLAYS 320px */
+@media (max-width: 767px) {
+  .main {
+    max-width: 425px;
+    background: #ffffff;
+    padding: 16px;
+  }
+}
+
+/* FOR BIG DISPLAYS */
+@media (min-width: 768px) {
+  .main {
+    width: 950px;
+    background: #ffffff;
+    padding: 30px;
+  }
 }
